@@ -1,2 +1,2 @@
 # mml_3.0
-Analisis de datos de las corridas del MML como parte de mi Tesis de Lic.
+MML Data analysis and comparison against values extracted from oficial organizations.
