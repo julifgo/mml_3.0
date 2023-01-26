@@ -2,9 +2,8 @@ within LAWM.Regions.Standard;
 package Asia
 
   block AsiaRegion
-    extends LAWM.Regions.Base.Region;
-    RegionInitsAsia inits(number_of_sectors=number_of_sectors);
-    RegionParametersAsia params(number_of_sectors=number_of_sectors);
+    extends LAWM.Regions.Base.Region(redeclare RegionInitsAsia inits);
+    extends LAWM.Regions.Base.Region(redeclare RegionParametersAsia params);
   end AsiaRegion;
 
   record RegionInitsAsia

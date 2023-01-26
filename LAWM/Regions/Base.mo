@@ -2,6 +2,8 @@ within LAWM.Regions;
 package Base
   partial block Region
     parameter Integer number_of_sectors = 5;
+    replaceable parameter RegionInits inits(number_of_sectors = number_of_sectors);
+    replaceable parameter RegionParameters params(number_of_sectors = number_of_sectors);
     
     LAWM.Other.Sources.DiscreteTimeSource     discrete_time_src(startTime=1960) annotation( Placement(visible = true, transformation(origin = {-78, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     LAWM.Other.IntegersAdd                    substract_1970(k1 = 1, k2 = -1) annotation( Placement(visible = true, transformation(origin = {24, 38}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));

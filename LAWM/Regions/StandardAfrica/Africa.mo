@@ -2,9 +2,8 @@ within LAWM.Regions.StandardAfrica;
 package Africa
 
   block AfricaRegion
-    extends LAWM.Regions.Base.Region;
-    RegionInitsAfrica inits(number_of_sectors=number_of_sectors);
-    RegionParametersAfrica params(number_of_sectors=number_of_sectors);
+    extends LAWM.Regions.Base.Region(redeclare RegionInitsAfrica inits);
+    extends LAWM.Regions.Base.Region(redeclare RegionParametersAfrica params);
   end AfricaRegion;
 
   record RegionInitsAfrica

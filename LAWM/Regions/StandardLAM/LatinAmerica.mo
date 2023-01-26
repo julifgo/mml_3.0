@@ -2,9 +2,8 @@ within LAWM.Regions.StandardLAM;
 package LatinAmerica
 
 block LatinAmericaRegion
-  extends LAWM.Regions.Base.Region;
-  LAWM.Regions.StandardLAM.LatinAmerica.RegionInitsLatinAmerica inits(number_of_sectors=number_of_sectors);
-  LAWM.Regions.StandardLAM.LatinAmerica.RegionParametersLatinAmerica params(number_of_sectors=number_of_sectors);
+  extends LAWM.Regions.Base.Region(redeclare RegionInitsLatinAmerica inits);
+  extends LAWM.Regions.Base.Region(redeclare RegionParametersLatinAmerica params);
 end LatinAmericaRegion;
 
   record RegionInitsLatinAmerica

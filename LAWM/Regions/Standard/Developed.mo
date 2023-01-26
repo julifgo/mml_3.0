@@ -2,9 +2,8 @@ within LAWM.Regions.Standard;
 package Developed
 
   block DevelopedRegion
-    extends LAWM.Regions.Base.Region;
-    RegionInitsDeveloped inits(number_of_sectors=number_of_sectors);
-    RegionParametersDeveloped params(number_of_sectors=number_of_sectors);
+    extends LAWM.Regions.Base.Region(redeclare RegionInitsDeveloped inits);
+    extends LAWM.Regions.Base.Region(redeclare RegionParametersDeveloped params);
   end DevelopedRegion;
 
   record RegionInitsDeveloped
