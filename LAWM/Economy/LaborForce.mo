@@ -24,8 +24,8 @@ block LaborForceProjection
       1 + foodSectorLaborForceVariationInProjectivePhase /
       (laborForceProportion_prev_year/ laborForceProportionChangeRatio - (laborForceProportionsPerSector_prev_year[1]) * laborForceProportionChangeRatio); // the "1" index corresponds to Food Sector
     //      Food Sector is not like the others. The "1" index corresponds to the food sector
-    laborForceProportionsPerSector[1] = (laborForceProportionsPerSector_prev_year[1] * laborForceProportionChangeRatio) -
-                                        foodSectorLaborForceVariationInProjectivePhase;
+    laborForceProportionsPerSector[1] = max(0,(laborForceProportionsPerSector_prev_year[1] * laborForceProportionChangeRatio) -
+                                        foodSectorLaborForceVariationInProjectivePhase);
     //      For sectors other than Food Sector. We have 5 sectors. It's hardcoded for now.
     for sec_index in 2:5 loop
         laborForceProportionsPerSector[sec_index] = laborForceProportionsPerSector_prev_year[sec_index] *

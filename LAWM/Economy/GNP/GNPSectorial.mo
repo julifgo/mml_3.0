@@ -22,15 +22,19 @@ block GNPSectorial
     discrete LAWM.Utilities.Interfaces.RealOutput gnpProportionsPerSector[numberOfSectors] annotation ( Placement(visible = true, transformation(origin = {60, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     discrete LAWM.Utilities.Interfaces.RealOutput totalGNP                                 annotation ( Placement(visible = true, transformation(origin = {60, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
+    
+    connector OutPort = output Real;
+        
     //Aux
     CobbDouglas cobbDouglas[numberOfSectors];
-    discrete Real laborForce[numberOfSectors];
-    discrete Real secCapital[numberOfSectors];
-    discrete Real grossSecGNP[numberOfSectors];
-    discrete Real secSalaries[numberOfSectors];
-    discrete Real techProgressModifier[numberOfSectors];
-
-
+    discrete OutPort laborForce[numberOfSectors];
+    discrete OutPort secCapital[numberOfSectors];
+    discrete OutPort grossSecGNP[numberOfSectors];
+    discrete OutPort secSalaries[numberOfSectors];
+    discrete OutPort techProgressModifier[numberOfSectors];
+    
+ 
+    
  equation
  // In the original version, we use the labor force proportions from sectors 1 to 4 to calculate the salaries for their respective sectors. This makes sense.
  //   But, instead of doing the same for sector 5, we substract the results of 1 to 4 to the total of all 5 that was already calculated. It should end up being
@@ -51,14 +55,21 @@ block GNPSectorial
     for i_sector in 1:numberOfSectors loop
       // Capital
       secCapital[i_sector] = capProportionPerSector[i_sector] * totalCapital; //(3)
+      
     end for;
+    
+    connect(secSalaries, cobbDouglas.salaries);
+    connect(secCapital, cobbDouglas.capital);
+    connect(alfa, cobbDouglas.alfa);
+    connect(cobbDouglas.production , grossSecGNP);
+    
     // Finally, calculate Cobb Douglas using the salaries, capitals and their respective alfas
     for i_sector in 1:numberOfSectors loop
       // Cobb Douglas:
-      connect(secSalaries[i_sector]            , cobbDouglas[i_sector].salaries);
-      connect(secCapital[i_sector]             , cobbDouglas[i_sector].capital);
-      connect(alfa[i_sector]                   , cobbDouglas[i_sector].alfa);
-      connect(cobbDouglas[i_sector].production , grossSecGNP[i_sector]);
+      //connect(secSalaries[i_sector]            , cobbDouglas[i_sector].salaries);
+      //connect(secCapital[i_sector]             , cobbDouglas[i_sector].capital);
+      //connect(alfa[i_sector]                   , cobbDouglas[i_sector].alfa);
+      //connect(cobbDouglas[i_sector].production , grossSecGNP[i_sector]);
       techProgressModifier[i_sector] = gamma[i_sector]^gammaExponent;
       // GNP per sector
       gnpPerSector[i_sector] = if time >= tech_progr_year_start then grossSecGNP[i_sector] * techProgressModifier[i_sector] else grossSecGNP[i_sector];
